@@ -1,0 +1,79 @@
+import axios from 'axios';
+
+const baseURL = import.meta.env.VITE_API_URL;
+
+let accessToken: string | null = null;
+let refreshingPromise: Promise<string | null> | null = null;
+
+export const setAccessToken = (token: string | null) => {
+  accessToken = token;
+};
+
+export const getAccessToken = () => accessToken;
+
+const refreshAccessToken = async () => {
+  if (!refreshingPromise) {
+    refreshingPromise = axios
+      .post(
+        `${baseURL}/auth/refresh`,
+        {},
+        {
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        const token = response.data?.accessToken as string | undefined;
+        if (!token) {
+          setAccessToken(null);
+          return null;
+        }
+
+        setAccessToken(token);
+        return token;
+      })
+      .catch(() => {
+        setAccessToken(null);
+        return null;
+      })
+      .finally(() => {
+        refreshingPromise = null;
+      });
+  }
+
+  return refreshingPromise;
+};
+
+export const api = axios.create({
+  baseURL,
+  withCredentials: true,
+});
+
+api.interceptors.request.use((config) => {
+  const token = getAccessToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const originalRequest = error.config as (typeof error.config & { _retry?: boolean }) | undefined;
+    const status = error.response?.status as number | undefined;
+    const isRefreshCall = (originalRequest?.url as string | undefined)?.includes('/auth/refresh');
+
+    if (!originalRequest || originalRequest._retry || status !== 401 || isRefreshCall) {
+      return Promise.reject(error);
+    }
+
+    originalRequest._retry = true;
+    const token = await refreshAccessToken();
+    if (!token) {
+      return Promise.reject(error);
+    }
+
+    originalRequest.headers.Authorization = `Bearer ${token}`;
+    return api(originalRequest);
+  },
+);

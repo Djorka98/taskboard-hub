@@ -1,0 +1,15 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { ListFilter, SlidersHorizontal } from 'lucide-react';
+import { useI18n } from '@/i18n/use-i18n';
+const filters = [
+    { key: 'all', label: 'board.filter.all' },
+    { key: 'dueWeek', label: 'board.filter.dueWeek' },
+];
+export const FilterBar = ({ activeFilter, onFilterChange, selectedPriority, onPriorityChange, groupedByPriority, onToggleGroup, descendingSort, onToggleSort, }) => {
+    const { t } = useI18n();
+    return (_jsxs("div", { className: "space-y-2", children: [_jsx("p", { className: "text-[11px] font-medium uppercase tracking-wide text-muted-foreground", children: t('board.filter.optionsLabel') }), _jsxs("div", { className: "flex flex-wrap items-start gap-2", children: [filters.map((item) => (_jsx("button", { type: "button", onClick: () => onFilterChange(item.key), className: activeFilter === item.key
+                            ? 'inline-flex min-h-8 items-center rounded-full border border-primary/35 bg-primary/15 px-3 text-xs font-semibold text-foreground'
+                            : 'inline-flex min-h-8 items-center rounded-full border border-border/70 bg-background/20 px-3 text-xs text-muted-foreground transition-colors hover:border-border hover:bg-muted/70 hover:text-foreground', children: t(item.label) }, item.key))), _jsxs("label", { className: "inline-flex min-h-8 w-full items-center gap-1.5 rounded-full border border-border/70 bg-background/20 px-2.5 text-xs text-muted-foreground sm:w-auto", children: [_jsx("span", { className: "text-[11px] text-muted-foreground", children: t('board.filter.priorityLabel') }), _jsxs("select", { value: selectedPriority, onChange: (event) => onPriorityChange(event.target.value), className: "ui-select h-6 min-w-[120px] flex-1 rounded-md bg-card/70 px-2 text-xs sm:flex-none", children: [_jsx("option", { value: "all", children: t('board.filter.priorityAll') }), _jsx("option", { value: "low", children: t('task.priority.low') }), _jsx("option", { value: "medium", children: t('task.priority.medium') }), _jsx("option", { value: "high", children: t('task.priority.high') }), _jsx("option", { value: "urgent", children: t('task.priority.urgent') })] })] }), _jsxs("button", { type: "button", onClick: onToggleGroup, className: groupedByPriority
+                            ? 'inline-flex min-h-8 items-center gap-1.5 rounded-full border border-primary/35 bg-primary/15 px-3 text-xs font-semibold text-foreground'
+                            : 'inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border/70 bg-background/20 px-3 text-xs text-muted-foreground transition-colors hover:border-border hover:bg-muted/70 hover:text-foreground', children: [_jsx(ListFilter, { size: 14 }), t('board.group')] }), _jsxs("button", { type: "button", onClick: onToggleSort, className: "inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border/70 bg-background/20 px-3 text-xs text-muted-foreground transition-colors hover:border-border hover:bg-muted/70 hover:text-foreground", children: [_jsx(SlidersHorizontal, { size: 14 }), t('board.sort'), " ", descendingSort ? '↓' : '↑'] })] })] }));
+};

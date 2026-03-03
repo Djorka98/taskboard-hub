@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 22% 98%;
+  --foreground: 224 26% 13%;
+  --card: 0 0% 100%;
+  --card-foreground: 224 26% 13%;
+  --border: 220 16% 88%;
+  --muted: 220 16% 95%;
+  --muted-foreground: 223 12% 42%;
+  --primary: 224 86% 59%;
+  --primary-foreground: 0 0% 100%;
+  --radius: 0.875rem;
+}
+
+.dark {
+  --background: 222 47% 8%;
+  --foreground: 213 31% 91%;
+  --card: 223 35% 12%;
+  --card-foreground: 213 31% 91%;
+  --border: 221 27% 22%;
+  --muted: 223 30% 15%;
+  --muted-foreground: 215 20% 67%;
+  --primary: 221 83% 62%;
+  --primary-foreground: 0 0% 100%;
+}
+
+* {
+  @apply border-border;
+}
+
+body {
+  @apply bg-background text-foreground antialiased;
+}
+
+#root {
+  transition: opacity 180ms ease, filter 180ms ease;
+}
+
+html[data-i18n-phase='out'] #root {
+  opacity: 0.72;
+  filter: saturate(0.85);
+}
+
+html[data-i18n-phase='in'] #root {
+  opacity: 1;
+  filter: saturate(1);
+}
+
+html[data-i18n-phase='out'],
+html[data-i18n-phase='in'] {
+  overflow-y: hidden;
+}
+
+.ui-select,
+.ui-date,
+.ui-datetime {
+  @apply border border-border/70 bg-background/25 text-foreground outline-none transition-colors;
+}
+
+.ui-select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6L8 10L12 6' stroke='%2396A2BF' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-position: right 0.65rem center;
+  background-repeat: no-repeat;
+  background-size: 14px;
+  padding-right: 2rem;
+}
+
+.ui-select:focus,
+.ui-date:focus,
+.ui-datetime:focus {
+  @apply border-primary/45;
+}
+
+.ui-select option {
+  background: hsl(var(--card));
+  color: hsl(var(--foreground));
+}
+
+.ui-date,
+.ui-datetime,
+input[type='date'],
+input[type='datetime-local'] {
+  color-scheme: dark;
+}
+
+.ui-date::-webkit-calendar-picker-indicator,
+.ui-datetime::-webkit-calendar-picker-indicator,
+input[type='date']::-webkit-calendar-picker-indicator,
+input[type='datetime-local']::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  filter: brightness(0) saturate(100%) invert(72%) sepia(14%) saturate(424%) hue-rotate(186deg) brightness(90%) contrast(89%);
+}
+
+.ui-date::-webkit-datetime-edit,
+.ui-datetime::-webkit-datetime-edit {
+  color: hsl(var(--foreground));
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: hsl(var(--primary) / 0.55) hsl(var(--background) / 0.45);
+}
+
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-track {
+  background: hsl(var(--background) / 0.5);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.55);
+  border: 2px solid hsl(var(--background) / 0.6);
+  border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.75);
+}
+
+*::-webkit-scrollbar-corner {
+  background: hsl(var(--background) / 0.5);
+}

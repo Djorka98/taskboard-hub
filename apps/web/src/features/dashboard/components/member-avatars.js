@@ -1,0 +1,4 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+export const MemberAvatars = ({ members }) => {
+    return (_jsxs("div", { className: "flex items-center justify-start sm:justify-end", children: [members.slice(0, 4).map((member, index) => (_jsx("div", { title: member.name, className: "relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-xs font-semibold shadow-sm sm:h-10 sm:w-10 sm:text-sm", style: { marginLeft: index === 0 ? 0 : -10 }, children: member.initials }, member.id))), members.length > 4 ? (_jsxs("div", { className: "relative -ml-2.5 inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-muted/70 text-xs font-medium text-muted-foreground shadow-sm sm:-ml-3 sm:h-10 sm:w-10 sm:text-sm", children: ["+", members.length - 4] })) : null] }));
+};

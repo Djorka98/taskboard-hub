@@ -1,0 +1,13 @@
+import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { RouterProvider } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import { LanguageTransition } from './components/layout/language-transition';
+import { UiBootstrap } from './components/layout/ui-bootstrap';
+import { AuthBootstrap } from './features/auth/auth-bootstrap';
+import './index.css';
+import { router } from './router';
+const queryClient = new QueryClient();
+createRoot(document.getElementById('root')).render(_jsx(StrictMode, { children: _jsxs(QueryClientProvider, { client: queryClient, children: [_jsx(LanguageTransition, {}), _jsx(UiBootstrap, {}), _jsx(AuthBootstrap, {}), _jsx(RouterProvider, { router: router }), _jsx(Toaster, { richColors: true, position: "bottom-right" })] }) }));
