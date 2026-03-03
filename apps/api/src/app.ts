@@ -40,6 +40,10 @@ app.get('/health', (_req, res) => {
   res.status(200).json({ status: 'ok', service: 'taskboard-hub-api' });
 });
 
+app.get('/', (_req, res) => {
+  res.status(200).json({ status: 'ok', message: 'API ejecutandose' });
+});
+
 app.use('/api', apiRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
