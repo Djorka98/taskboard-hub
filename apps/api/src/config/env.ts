@@ -19,9 +19,9 @@ const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
   const fieldErrors = parsed.error.flatten().fieldErrors;
-  const invalidKeys = Object.keys(fieldErrors).filter(
-    (key) => Array.isArray(fieldErrors[key]) && fieldErrors[key]!.length > 0,
-  );
+  const invalidKeys = Object.entries(fieldErrors)
+    .filter(([, messages]) => Array.isArray(messages) && messages.length > 0)
+    .map(([key]) => key);
 
   console.error('Invalid environment variables', fieldErrors);
   throw new Error(
