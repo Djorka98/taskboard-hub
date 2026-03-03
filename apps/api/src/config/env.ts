@@ -18,8 +18,15 @@ const envSchema = z.object({
 const parsed = envSchema.safeParse(process.env);
 
 if (!parsed.success) {
-  console.error('Invalid environment variables', parsed.error.flatten().fieldErrors);
-  throw new Error('Invalid environment variables');
+  const fieldErrors = parsed.error.flatten().fieldErrors;
+  const invalidKeys = Object.keys(fieldErrors).filter(
+    (key) => Array.isArray(fieldErrors[key]) && fieldErrors[key]!.length > 0,
+  );
+
+  console.error('Invalid environment variables', fieldErrors);
+  throw new Error(
+    `Invalid environment variables: ${invalidKeys.length > 0 ? invalidKeys.join(', ') : 'unknown'}`,
+  );
 }
 
 export const env = parsed.data;
