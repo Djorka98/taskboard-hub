@@ -7,7 +7,7 @@
       "runtime": "@vercel/node@5.0.0",
       "maxDuration": 30
     },
-    "api/index.ts": {
+    "api/index.js": {
       "runtime": "@vercel/node@5.0.0",
       "maxDuration": 30
     }
@@ -19,7 +19,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/api/index.ts"
+      "dest": "/api/index.js"
     }
   ]
 }
