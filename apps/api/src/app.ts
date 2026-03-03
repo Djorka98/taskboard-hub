@@ -19,10 +19,11 @@ app.use(
         return;
       }
 
-      const isLocalhost = /^http:\/\/localhost:\d+$/i.test(origin);
+      const isLocalhost = /^https?:\/\/localhost:\d+$/i.test(origin);
+      const isVercelApp = /^https:\/\/[a-z0-9-]+\.vercel\.app$/i.test(origin);
       const isAllowedProdOrigin = origin === env.CLIENT_ORIGIN;
 
-      if ((env.NODE_ENV !== 'production' && isLocalhost) || isAllowedProdOrigin) {
+      if ((env.NODE_ENV !== 'production' && isLocalhost) || isAllowedProdOrigin || isVercelApp) {
         callback(null, true);
         return;
       }
