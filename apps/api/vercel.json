@@ -10,6 +10,10 @@
   },
   "routes": [
     {
+      "src": "/health",
+      "dest": "/api/health.ts"
+    },
+    {
       "src": "/(.*)",
       "dest": "/api/index.ts"
     }
