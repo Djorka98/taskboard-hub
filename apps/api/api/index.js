@@ -17,7 +17,39 @@ const sendJson = (res, statusCode, payload) => {
   }
 };
 
+const applyCors = (req, res) => {
+  const origin = req?.headers?.origin;
+  const configuredOrigin = process.env.CLIENT_ORIGIN;
+  const isVercelOrigin = typeof origin === 'string' && /\.vercel\.app$/i.test(origin);
+  const allowOrigin = origin && (origin === configuredOrigin || isVercelOrigin) ? origin : configuredOrigin;
+
+  if (allowOrigin && typeof res.setHeader === 'function') {
+    res.setHeader('access-control-allow-origin', allowOrigin);
+    res.setHeader('access-control-allow-credentials', 'true');
+    res.setHeader('access-control-allow-methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+    res.setHeader('access-control-allow-headers', 'Content-Type, Authorization');
+    res.setHeader('vary', 'Origin');
+  }
+};
+
+const sendEmpty = (res, statusCode) => {
+  if ('statusCode' in res) {
+    res.statusCode = statusCode;
+  }
+
+  if (typeof res.end === 'function') {
+    res.end();
+  }
+};
+
 export default async function handler(req, res) {
+  applyCors(req, res);
+
+  if (req?.method === 'OPTIONS') {
+    sendEmpty(res, 204);
+    return;
+  }
+
   try {
     const mod = await import('../dist/app.js');
     const app = mod.app;
