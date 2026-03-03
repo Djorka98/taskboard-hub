@@ -3,6 +3,10 @@
   "installCommand": "cd ../..; pnpm install --frozen-lockfile",
   "buildCommand": "cd ../..; pnpm --filter @nexus/api build",
   "functions": {
+    "api/health.js": {
+      "runtime": "@vercel/node@5.0.0",
+      "maxDuration": 30
+    },
     "api/index.ts": {
       "runtime": "@vercel/node@5.0.0",
       "maxDuration": 30
@@ -11,7 +15,7 @@
   "routes": [
     {
       "src": "/health",
-      "dest": "/api/health.ts"
+      "dest": "/api/health.js"
     },
     {
       "src": "/(.*)",
