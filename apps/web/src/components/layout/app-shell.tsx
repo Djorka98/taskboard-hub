@@ -254,7 +254,7 @@ export const AppShell = () => {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 border-r border-border/80 bg-card/65 backdrop-blur transition-all duration-300 lg:static lg:z-auto',
+          'fixed inset-y-0 left-0 z-40 border-r border-border/80 bg-card/65 backdrop-blur transition-all duration-300 lg:static lg:z-auto mt-0 lg:mt-0',
           sidebarCollapsed ? 'p-2' : 'p-3',
           sidebarCollapsed ? '-translate-x-full lg:w-[84px] lg:translate-x-0' : 'w-[260px] translate-x-0 lg:w-[260px]',
         )}
