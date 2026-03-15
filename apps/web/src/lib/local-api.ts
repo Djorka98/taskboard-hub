@@ -6,7 +6,7 @@ import type { CreateNoteInput, NoteEntity, UpdateNoteInput } from '@/features/no
 import type { CreateTaskInput, TaskEntity, UpdateTaskInput } from '@/features/tasks/tasks.types';
 
 // Local storage-backed API adapter for offline/local mode.
-// Mirrors state in both sessionStorage (active tab) and localStorage (persistence across reloads).
+// Persists all local state in localStorage (no sessionStorage usage).
 
 const STORAGE_KEY = 'nexus:local:state';
 
@@ -27,9 +27,7 @@ const defaultUser = (email: string, fullName?: string): AuthUser => ({
 });
 
 const readState = (): LocalState => {
-  const sessionRaw = sessionStorage.getItem(STORAGE_KEY);
-  const localRaw = localStorage.getItem(STORAGE_KEY);
-  const source = sessionRaw ?? localRaw;
+  const source = localStorage.getItem(STORAGE_KEY);
   if (!source) return { tasks: [], notes: [], user: null, accessToken: null };
   try {
     const parsed = JSON.parse(source) as LocalState;
@@ -46,7 +44,6 @@ const readState = (): LocalState => {
 
 const writeState = (state: LocalState) => {
   const serialized = JSON.stringify(state);
-  sessionStorage.setItem(STORAGE_KEY, serialized);
   localStorage.setItem(STORAGE_KEY, serialized);
 };
 
