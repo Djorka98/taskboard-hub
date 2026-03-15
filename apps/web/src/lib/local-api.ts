@@ -24,7 +24,6 @@ const defaultUser = (email: string, fullName?: string): AuthUser => ({
   email,
   fullName: fullName ?? email.split('@')[0] ?? 'Local User',
   role: 'member',
-  avatarUrl: null,
   createdAt: nowIso(),
   updatedAt: nowIso(),
 });
@@ -187,6 +186,7 @@ export class LocalApiAdapter {
       const idx = state.tasks.findIndex((item) => item.id === id);
       if (idx === -1) return Promise.reject(new Error('Task not found'));
       const existing = state.tasks[idx];
+      if (!existing) return Promise.reject(new Error('Task not found'));
       const updated = updateTask(existing, body as UpdateTaskInput);
       const next = [...state.tasks];
       next[idx] = updated;
@@ -199,6 +199,7 @@ export class LocalApiAdapter {
       const idx = state.notes.findIndex((item) => item.id === id);
       if (idx === -1) return Promise.reject(new Error('Note not found'));
       const existing = state.notes[idx];
+      if (!existing) return Promise.reject(new Error('Note not found'));
       const updated = updateNote(existing, body as UpdateNoteInput);
       const next = [...state.notes];
       next[idx] = updated;
