@@ -24,8 +24,6 @@ const defaultUser = (email: string, fullName?: string): AuthUser => ({
   email,
   fullName: fullName ?? email.split('@')[0] ?? 'Local User',
   role: 'member',
-  createdAt: nowIso(),
-  updatedAt: nowIso(),
 });
 
 const readState = (): LocalState => {
