@@ -128,3 +128,8 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator {
 *::-webkit-scrollbar-corner {
   background: hsl(var(--background) / 0.5);
 }
+
+/* Force zero top spacing for stacked elements with space-y-4 utility */
+.space-y-4>:not([hidden])~:not([hidden]) {
+  margin-top: 0 !important;
+}
