@@ -1,3 +1,4 @@
+import { AxiosHeaders } from 'axios';
 import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 import type { CreateTaskInput, TaskEntity, UpdateTaskInput } from '@/features/tasks/tasks.types';
@@ -60,40 +61,36 @@ const updateTask = (existing: TaskEntity, payload: UpdateTaskInput): TaskEntity 
   };
 };
 
-type SupportedData = TaskEntity | TaskEntity[] | { message: string };
-
-type LocalResponse = Promise<AxiosResponse<SupportedData>>;
-
-const buildResponse = (data: SupportedData): AxiosResponse<SupportedData> => {
+const buildResponse = <T>(data: T): AxiosResponse<T> => {
   return {
     data,
     status: 200,
     statusText: 'OK',
-    headers: {},
-    config: { headers: {} as Record<string, string> },
-  } satisfies AxiosResponse<SupportedData>;
+    headers: new AxiosHeaders(),
+    config: { headers: new AxiosHeaders() },
+  } satisfies AxiosResponse<T>;
 };
 
 export class LocalApiAdapter {
-  get(url: string, _config?: AxiosRequestConfig): LocalResponse {
+  get<T = any, R = AxiosResponse<T>>(url: string, _config?: AxiosRequestConfig): Promise<R> {
     if (url === '/tasks') {
-      return Promise.resolve(buildResponse(readTasks()));
+      return Promise.resolve(buildResponse(readTasks()) as R);
     }
     return Promise.reject(new Error(`Local API GET not implemented for ${url}`));
   }
 
-  post(url: string, body?: unknown, _config?: AxiosRequestConfig): LocalResponse {
+  post<T = any, R = AxiosResponse<T>>(url: string, body?: unknown, _config?: AxiosRequestConfig): Promise<R> {
     if (url === '/tasks') {
       const tasks = readTasks();
       const task = createTask(body as CreateTaskInput);
       tasks.push(task);
       writeTasks(tasks);
-      return Promise.resolve(buildResponse(task));
+      return Promise.resolve(buildResponse(task as T) as R);
     }
     return Promise.reject(new Error(`Local API POST not implemented for ${url}`));
   }
 
-  patch(url: string, body?: unknown, _config?: AxiosRequestConfig): LocalResponse {
+  patch<T = any, R = AxiosResponse<T>>(url: string, body?: unknown, _config?: AxiosRequestConfig): Promise<R> {
     if (url.startsWith('/tasks/')) {
       const id = url.replace('/tasks/', '');
       const tasks = readTasks();
@@ -104,18 +101,18 @@ export class LocalApiAdapter {
       const updated = updateTask(existing, body as UpdateTaskInput);
       tasks[idx] = updated;
       writeTasks(tasks);
-      return Promise.resolve(buildResponse(updated));
+      return Promise.resolve(buildResponse(updated as T) as R);
     }
     return Promise.reject(new Error(`Local API PATCH not implemented for ${url}`));
   }
 
-  delete(url: string, _config?: AxiosRequestConfig): LocalResponse {
+  delete<T = any, R = AxiosResponse<T>>(url: string, _config?: AxiosRequestConfig): Promise<R> {
     if (url.startsWith('/tasks/')) {
       const id = url.replace('/tasks/', '');
       const tasks = readTasks();
       const next = tasks.filter((item) => item.id !== id);
       writeTasks(next);
-      return Promise.resolve(buildResponse({ message: 'Task deleted' }));
+      return Promise.resolve(buildResponse({ message: 'Task deleted' } as T) as R);
     }
     return Promise.reject(new Error(`Local API DELETE not implemented for ${url}`));
   }

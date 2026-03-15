@@ -5,6 +5,13 @@ import { LocalApiAdapter } from '@/lib/local-api';
 
 const baseURL = import.meta.env.VITE_API_URL;
 
+type ApiClient = {
+  get<T = any, R = import('axios').AxiosResponse<T>>(url: string, config?: unknown): Promise<R>;
+  post<T = any, R = import('axios').AxiosResponse<T>>(url: string, data?: unknown, config?: unknown): Promise<R>;
+  patch<T = any, R = import('axios').AxiosResponse<T>>(url: string, data?: unknown, config?: unknown): Promise<R>;
+  delete<T = any, R = import('axios').AxiosResponse<T>>(url: string, config?: unknown): Promise<R>;
+};
+
 let accessToken: string | null = null;
 let refreshingPromise: Promise<string | null> | null = null;
 
@@ -83,4 +90,4 @@ realApi.interceptors.response.use(
   },
 );
 
-export const api = USE_LOCAL_BACKEND ? new LocalApiAdapter() : realApi;
+export const api: ApiClient = USE_LOCAL_BACKEND ? (new LocalApiAdapter() as ApiClient) : (realApi as ApiClient);
