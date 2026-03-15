@@ -74,7 +74,7 @@ export const RegisterPage = () => {
         <h1 className="text-2xl font-semibold">{t('auth.createAccount')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t('auth.registerSubtitle')}</p>
 
-        <form className="mt-6 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-6 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="fullName" className="mb-1 block text-sm text-muted-foreground">
               {t('auth.fullName')}
@@ -136,7 +136,7 @@ export const RegisterPage = () => {
           <button
             type="submit"
             disabled={registerMutation.isPending}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
+            className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
           >
             {registerMutation.isPending && <Loader2 size={16} className="animate-spin" />}
             {t('auth.createAccountAction')}
