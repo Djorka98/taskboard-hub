@@ -129,7 +129,10 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator {
   background: hsl(var(--background) / 0.5);
 }
 
-/* Force zero top spacing for stacked elements with space-y-4 utility */
-.space-y-4>:not([hidden])~:not([hidden]) {
+/* Remove top spacing for stacked items only inside aside or modal root */
+.layout-aside .space-y-4>:not([hidden])~:not([hidden]),
+.layout-aside .space-y-3>:not([hidden])~:not([hidden]),
+.modal-root .space-y-4>:not([hidden])~:not([hidden]),
+.modal-root .space-y-3>:not([hidden])~:not([hidden]) {
   margin-top: 0 !important;
 }

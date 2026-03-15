@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+import { USE_LOCAL_BACKEND } from '@/config/runtime';
+import { LocalApiAdapter } from '@/lib/local-api';
+
 const baseURL = import.meta.env.VITE_API_URL;
 
 let accessToken: string | null = null;
@@ -12,6 +15,8 @@ export const setAccessToken = (token: string | null) => {
 export const getAccessToken = () => accessToken;
 
 const refreshAccessToken = async () => {
+  if (USE_LOCAL_BACKEND) return null;
+
   if (!refreshingPromise) {
     refreshingPromise = axios
       .post(
@@ -43,12 +48,12 @@ const refreshAccessToken = async () => {
   return refreshingPromise;
 };
 
-export const api = axios.create({
+const realApi = axios.create({
   baseURL,
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
+realApi.interceptors.request.use((config) => {
   const token = getAccessToken();
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -56,7 +61,7 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-api.interceptors.response.use(
+realApi.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config as (typeof error.config & { _retry?: boolean }) | undefined;
@@ -74,6 +79,8 @@ api.interceptors.response.use(
     }
 
     originalRequest.headers.Authorization = `Bearer ${token}`;
-    return api(originalRequest);
+    return realApi(originalRequest);
   },
 );
+
+export const api = USE_LOCAL_BACKEND ? new LocalApiAdapter() : realApi;

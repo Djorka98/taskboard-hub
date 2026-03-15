@@ -254,7 +254,7 @@ export const AppShell = () => {
 
       <aside
         className={cn(
-          'fixed inset-y-0 left-0 z-40 m-0 border-r border-border/80 bg-card/65 backdrop-blur transition-all duration-300 lg:static lg:z-auto mt-0 lg:mt-0',
+          'layout-aside fixed inset-y-0 left-0 z-40 m-0 border-r border-border/80 bg-card/65 backdrop-blur transition-all duration-300 lg:static lg:z-auto mt-0 lg:mt-0',
           sidebarCollapsed ? 'p-2' : 'p-3',
           sidebarCollapsed ? '-translate-x-full lg:w-[84px] lg:translate-x-0' : 'w-[260px] translate-x-0 lg:w-[260px]',
         )}
@@ -449,7 +449,7 @@ export const AppShell = () => {
         </main>
       </div>
       {profileModalOpen ? (
-        <div className="fixed inset-0 z-50 m-0 flex items-center justify-center px-4 pb-4 pt-0">
+        <div className="modal-root fixed inset-0 z-50 m-0 flex items-center justify-center px-4 pb-4 pt-0">
           <button
             type="button"
             onClick={() => setProfileModalOpen(false)}
