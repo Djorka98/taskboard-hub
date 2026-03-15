@@ -133,6 +133,11 @@ input[type='datetime-local']::-webkit-calendar-picker-indicator {
 .layout-aside .space-y-4>:not([hidden])~:not([hidden]),
 .layout-aside .space-y-3>:not([hidden])~:not([hidden]),
 .modal-root .space-y-4>:not([hidden])~:not([hidden]),
-.modal-root .space-y-3>:not([hidden])~:not([hidden]) {
+.modal-root .space-y-3>:not([hidden])~:not([hidden]),
+div[role="dialog"] .space-y-4>:not([hidden])~:not([hidden]),
+div[role="dialog"] .space-y-3>:not([hidden])~:not([hidden]),
+aside .space-y-4>:not([hidden])~:not([hidden]),
+aside .space-y-3>:not([hidden])~:not([hidden]) {
   margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
