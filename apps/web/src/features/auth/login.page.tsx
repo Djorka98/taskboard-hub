@@ -71,7 +71,7 @@ export const LoginPage = () => {
         <h1 className="text-2xl font-semibold">{t('auth.welcomeBack')}</h1>
         <p className="mt-2 text-sm text-muted-foreground">{t('auth.signInSubtitle')}</p>
 
-        <form className="mt-6 space-y-5" onSubmit={form.handleSubmit(onSubmit)}>
+        <form className="mt-6 space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
           <div>
             <label htmlFor="email" className="mb-1 block text-sm text-muted-foreground">
               {t('auth.email')}
@@ -117,7 +117,7 @@ export const LoginPage = () => {
           <button
             type="submit"
             disabled={loginMutation.isPending}
-            className="mt-4 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
+            className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
           >
             {loginMutation.isPending && <Loader2 size={16} className="animate-spin" />}
             {t('auth.signIn')}

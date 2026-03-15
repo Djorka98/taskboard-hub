@@ -49,7 +49,7 @@ type SectionProps = {
 
 const Section = ({ title, subtitle, children }: SectionProps) => {
   return (
-    <section className="rounded-xl border border-border/70 bg-card/70 p-3.5 shadow-panel">
+    <section className="mt-3 rounded-xl border border-border/70 bg-card/70 p-3.5 shadow-panel first:mt-0">
       <div className="mb-2.5">
         <h4 className="text-sm font-semibold tracking-tight">{title}</h4>
         {subtitle ? <p className="mt-0.5 text-xs text-muted-foreground">{subtitle}</p> : null}
@@ -640,7 +640,7 @@ export const TaskDetailDrawer = ({ task, storageScope, columns, onClose, onSave,
                   <EditableField label={t('task.field.assignee')} value={task.assignee.name || t('task.unassigned')} icon={UserRound} />
                 </div>
 
-                <div className="space-y-2">
+                <div className="mt-3 grid gap-2">
                   <label className="block">
                     <span className="mb-1 block text-[11px] font-medium uppercase tracking-wide text-muted-foreground">{t('task.field.title')}</span>
                     <input

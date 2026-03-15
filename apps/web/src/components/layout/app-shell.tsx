@@ -315,7 +315,7 @@ export const AppShell = () => {
 
       </aside>
 
-      <div className="flex min-h-0 flex-1 flex-col space-y-4 sm:space-y-5">
+      <div className="flex min-h-0 flex-1 flex-col">
         <header className="sticky top-0 z-20 border-b border-border/70 bg-background/85 px-3 py-3 backdrop-blur sm:px-4 lg:px-5">
           <div className="flex flex-wrap items-center justify-between gap-2.5">
             <div className="min-w-0 flex-1 sm:min-w-[220px] lg:flex-none">
@@ -444,7 +444,7 @@ export const AppShell = () => {
             </div>
           </div>
         </header>
-        <main className="flex min-h-0 flex-1 items-start overflow-y-auto p-3 sm:p-4 lg:p-5 space-y-4 sm:space-y-5">
+        <main className="flex min-h-0 flex-1 items-start overflow-y-auto p-3 sm:p-4 lg:p-5">
           <Outlet />
         </main>
       </div>
