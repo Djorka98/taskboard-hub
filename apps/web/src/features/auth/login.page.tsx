@@ -117,7 +117,7 @@ export const LoginPage = () => {
           <button
             type="submit"
             disabled={loginMutation.isPending}
-            className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
+            className="mt-3 inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-primary text-sm font-medium text-primary-foreground transition-opacity disabled:opacity-60"
           >
             {loginMutation.isPending && <Loader2 size={16} className="animate-spin" />}
             {t('auth.signIn')}

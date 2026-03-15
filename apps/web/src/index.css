@@ -146,3 +146,9 @@ aside [class*="space-y-"]>:not([hidden])~:not([hidden]) {
   margin-top: 0 !important;
   margin-bottom: 0 !important;
 }
+
+/* Global fallback: kill space-y top/bottom margins everywhere */
+[class*="space-y-"]>:not([hidden])~:not([hidden]) {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
